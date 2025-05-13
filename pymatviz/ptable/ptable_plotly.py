@@ -58,6 +58,7 @@ def ptable_heatmap_plotly(
     label_map: dict[str, str] | Callable[[str], str] | Literal[False] | None = None,
     border: dict[str, Any] | None | Literal[False] = None,
     scale: float = 1.0,
+    hide_elements : Sequence[str] = (),
     **kwargs: Any,
 ) -> go.Figure:
     """Create a Plotly figure with an interactive heatmap of the periodic table.
@@ -204,6 +205,9 @@ def ptable_heatmap_plotly(
         # build table from bottom up so that period 1 becomes top row
         row = n_rows - period
         col = group - 1
+        
+        if symbol in hide_elements:
+            continue
 
         label = ""  # label (if not None) is placed below the element symbol
         if show_values:
